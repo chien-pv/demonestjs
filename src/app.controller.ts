@@ -10,6 +10,7 @@ import {
 import { AppService } from './app.service';
 import { JwtService } from '@nestjs/jwt';
 import { access } from 'fs';
+import { MailerService } from '@nestjs-modules/mailer';
 
 class UserDTO {
   email: string;
@@ -21,6 +22,7 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private jwtService: JwtService,
+    private mailerService: MailerService,
   ) {}
 
   @Post('/login')
@@ -63,6 +65,20 @@ export class AppController {
   @Get()
   // @Render('index')
   async getHello(@Param('id') id: string, @Query('q') q: string) {
+    this.mailerService
+      .sendMail({
+        to: 'chjenbk11@gmail.com', // list of receivers
+        from: 'chjenbk11@gmail.com', // sender address
+        subject: 'Testing Nest MailerModule ✔', // Subject line
+        template: 'mail',
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     return { name: 'ABC' };
   }
 
