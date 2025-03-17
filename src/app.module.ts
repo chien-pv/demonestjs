@@ -11,6 +11,7 @@ import { Categoty } from './products/category.entity';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -33,6 +34,6 @@ import { join } from 'path';
     ProductsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtService],
 })
 export class AppModule {}

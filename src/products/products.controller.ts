@@ -1,5 +1,14 @@
-import { Controller, Get, Put, Post, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Put,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { AuthGuard } from 'src/auth.guard';
 
 export interface ProductParams {
   name: string;
@@ -11,11 +20,14 @@ export interface ProductParams {
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}
+
+  @UseGuards(AuthGuard)
   @Get('')
   public async index() {
     const products = await this.productService.getAll();
     return { products };
   }
+
   @Put('update/:id')
   public async update(@Body() body: ProductParams, @Param('id') id: number) {
     console.log(body);
@@ -25,12 +37,13 @@ export class ProductsController {
     return { message: 'Update thành công!!!', product };
   }
 
+  @UseGuards(AuthGuard)
   @Post('create')
   public async create(@Body() body: ProductParams) {
-    console.log(body);
+    // console.log(body);
 
-    const product = await this.productService.create(body);
+    // const product = await this.productService.create(body);
 
-    return { message: 'Tạo mới thành công!!!', product };
+    return { message: 'Tạo mới thành công!!!' };
   }
 }
