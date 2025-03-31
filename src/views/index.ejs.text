@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+        <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #chat-box { width: 80%; max-width: 500px; margin: auto; }
+        #messages { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; }
+        input { width: 80%; padding: 10px; }
+    </style>
+    </head>
+    <body>
+        <div id="chat-box">
+            <div id="messages"></div>
+            <input id="message" type="text" placeholder="Nhập tin nhắn..." />
+            <button onclick="sendMessage()">Gửi</button>
+        </div>
+        <script>
+            const socket = io("http://localhost:3000");
+
+            socket.on("newMessage", (msg) => {
+                const messages = document.getElementById("messages");
+                messages.innerHTML += `<p><strong>${msg.sender}:</strong> ${msg.text}</p>`;
+            });
+
+            function sendMessage() {
+                const text = document.getElementById("message").value;
+                if (text.trim()) {
+                    socket.emit("message", { sender: "User", text });
+                    document.getElementById("message").value = "";
+                }
+            }
+        </script>
+    </body>
+</html>

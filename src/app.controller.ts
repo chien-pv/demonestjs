@@ -63,25 +63,25 @@ export class AppController {
   }
 
   @Get()
-  // @Render('index')
-  async getHello(@Param('id') id: string, @Query('q') q: string) {
-    this.mailerService
-      .sendMail({
-        to: 'chjenbk11@gmail.com', // list of receivers
-        from: 'chjenbk11@gmail.com', // sender address
-        subject: 'Testing Nest MailerModule ✔', // Subject line
-        template: 'mail',
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  @Render('index')
+  async getHello() {}
+  // async getHello(@Param('id') id: string, @Query('q') q: string) {
+  //   this.mailerService
+  //     .sendMail({
+  //       to: 'chjenbk11@gmail.com', // list of receivers
+  //       from: 'chjenbk11@gmail.com', // sender address
+  //       subject: 'Testing Nest MailerModule ✔', // Subject line
+  //       template: 'mail',
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
 
-    return { name: 'ABC' };
-  }
-
+  //   return { name: 'ABC' };
+  // }
   @Get('/about')
   getAbout() {
     return { id: 12, pass: 'abc' };
